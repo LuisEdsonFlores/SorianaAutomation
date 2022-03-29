@@ -39,7 +39,7 @@ public class PageLogin {
 	public void Iniciasesion (String user, String pass) {
 
 		try{
-			Thread.sleep(1000);
+			Thread.sleep(4000);
 			}
 			catch(InterruptedException ie){
 			}	 	
@@ -57,6 +57,16 @@ public class PageLogin {
 			catch(InterruptedException ie){
 			}	
 		
+	}
+	
+	public void iniciaComoInvitado() {
+		try{
+			Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+			}	
+		driver.findElement(NoSuscribir).click();	 	
+
 	}
 	
 	

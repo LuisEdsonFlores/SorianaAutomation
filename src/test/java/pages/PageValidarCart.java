@@ -3,7 +3,10 @@ package pages;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageValidarCart {
 	private WebDriver driver;
@@ -18,7 +21,7 @@ public class PageValidarCart {
 	
 	public  PageValidarCart (WebDriver driver) {
 		this.driver = driver;
-		irCarrito = By.xpath("(//span[@class='minicart-total-value font-primary--bold'])[2]");
+		irCarrito = By.xpath("//a[@class='minicart-link hide-mobile justify-content-center custom-attr set-spinner']");
 		iconBote = By.xpath("(//button[@class='btn btn-link btn-link--secondary remove-btn-lg remove-product text--red border-0 p-0 bg-transparent'])[1]");
 		btnVaciarCarrito = By.xpath("//button[@class='btn btn-outline-secondary col-12']");
 		siAceptar = By.xpath("(//button[@class='btn btn-primary clear-cart expanded-down mb-3 mb-lg-0 mx-lg-2 order-lg-2'])[1]");
@@ -31,20 +34,20 @@ public class PageValidarCart {
 	public void validarCarro() {
 	
 			driver.findElement(irCarrito).click();
-		
+	
 		if( driver.findElements(productoUno).size()!=0) {
 			
 			driver.findElement(btnVaciarCarrito).click();	
 			driver.findElement(siAceptar).click(); 
+			
 			try{
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 				}
 				catch(InterruptedException ie){
 				}
 			driver.findElement(btnContinuarComprando).click();
 		}
 		else {
-			driver.findElement(irCarrito).click();
 			driver.findElement(btnContinuarComprando).click();
 		}
 		
@@ -52,13 +55,15 @@ public class PageValidarCart {
 	
 	public void IrCheckout() {
 		try{
-			Thread.sleep(5000);
-			}
-			catch(InterruptedException ie){
-			}
+		Thread.sleep(10000);
+		}
+		catch(InterruptedException ie){
+		}
 		driver.findElement(irCarrito).click();
       if( driver.findElements(productoUno).size()!=0) {
-			
+  		JavascriptExecutor jse = ((JavascriptExecutor)driver);   
+		jse.executeScript("window.scrollTo(0, 300)");
+
 			driver.findElement(btnIniciarPago).click();	
 		}
 	

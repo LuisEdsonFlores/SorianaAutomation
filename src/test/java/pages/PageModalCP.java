@@ -15,22 +15,24 @@ public class PageModalCP {
 	private By txtCPDomicilio;
 	private By checkDirPredeterminada;
 	private By btnAceptar;
+	private By txtCP;
 	
 	
 	public  PageModalCP (WebDriver driver) {
 		this.driver = driver;
 		IngresaTuCp = By.xpath("//a[@class='common-header__postal-code maps-show']");
 		Pickup = By.id("blockpickup");
-		EnvioaDomicilio = By.id("blockhome");
+		EnvioaDomicilio = By.xpath("//div[@id='blockhome']");
 		txtCPpickup = By.id("store-postal-code-header");
 		txtCPDomicilio = By.id("zipCode");
 		checkDirPredeterminada = By.xpath("(//div[contains(text(),'predeterminada')])[1]");
 		btnAceptar = By.xpath("//button[@class='btn btn-primary store-form--btn js-submit-postal']");
+		txtCP = By.xpath("//input[@id='zipCode']");
 	}
 	
 	public void IngresarCpEnModalEnvioDomicilio (String codigopostal) {
 		try{
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			}
 			catch(InterruptedException ie){
 			}
@@ -41,10 +43,31 @@ public class PageModalCP {
 			driver.findElement(checkDirPredeterminada).click();		
 		}
 		else {
+			
 			driver.findElement(EnvioaDomicilio).click();
 			driver.findElement(checkDirPredeterminada).click();	
 			
 		}	
 	}
+	
+	public void IngresarCpComoInvitado (String CPinvitado) {
+		try{
+			Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+			}
+		driver.findElement(IngresaTuCp).click();
+		try{
+			Thread.sleep(4000);
+			}
+			catch(InterruptedException ie){
+				
+			} 		driver.findElement(EnvioaDomicilio).click();
+		driver.findElement(txtCP).sendKeys(CPinvitado);
+		driver.findElement(btnAceptar).click();
+		
+       	
+	}
+	
 }
 
