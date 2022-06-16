@@ -25,14 +25,17 @@ public class PageBuscarProducto {
 	
 	public void BuscarProducto(String producto) {
 		try{
-			Thread.sleep(8000);
+			Thread.sleep(5400);
 			}
 			catch(InterruptedException ie){
 			}	
 		driver.findElement(CampoBusqueda).click();
-		driver.findElement(CampoBusqueda).click();
 		driver.findElement(CampoBusqueda).sendKeys(producto);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		try{
+			Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+			}	
 		driver.findElement(ProductoEnBusqueda).click();
 
 		

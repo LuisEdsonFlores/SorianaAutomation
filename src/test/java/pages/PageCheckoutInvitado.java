@@ -47,9 +47,19 @@ public class PageCheckoutInvitado {
 		ewait.until(ExpectedConditions.elementToBeClickable(btnContinuarComoInvitado));
 		driver.findElement(btnContinuarComoInvitado).click();
 		driver.findElement(txtNombre).sendKeys(Nombre);
-		driver.findElement(txtApellidoPaterno).sendKeys(ApellidoP);
+		try{
+			Thread.sleep(3000);
+			}
+			catch(InterruptedException ie){
+				
+			} 		driver.findElement(txtApellidoPaterno).sendKeys(ApellidoP);
+		try{
+			Thread.sleep(3000);
+			}
+			catch(InterruptedException ie){
+				
+			} 	
 		driver.findElement(txtEmail).sendKeys(Email);
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.findElement(txtTelefono).sendKeys(Telefono);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.findElement(btnContinuarComoInvitadoForm).click();

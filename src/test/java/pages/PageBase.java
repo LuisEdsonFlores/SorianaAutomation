@@ -30,7 +30,7 @@ public class PageBase {
 	 	System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");
 	 	driver = new ChromeDriver();
 	 	driver.manage().window().maximize();
-	 	driver.get("https://staging-na01-soriana.demandware.net/s/Soriana/home");
+	 	driver.get("https://storefront:soria2021@development-na01-soriana.demandware.net/s/Soriana/home");
 		driver.findElement(NoSuscribir).click();	 	
 		try{
 			Thread.sleep(4000);

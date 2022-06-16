@@ -18,21 +18,22 @@ public class PageModalCP {
 	private By txtCP;
 	
 	
+	
 	public  PageModalCP (WebDriver driver) {
 		this.driver = driver;
 		IngresaTuCp = By.xpath("//a[@class='common-header__postal-code maps-show']");
 		Pickup = By.id("blockpickup");
-		EnvioaDomicilio = By.xpath("//div[@id='blockhome']");
+		EnvioaDomicilio = By.xpath("//div[@class='opacity-selector-modal homeDelivery-pc js-click-shadow']");
 		txtCPpickup = By.id("store-postal-code-header");
 		txtCPDomicilio = By.id("zipCode");
-		checkDirPredeterminada = By.xpath("(//div[contains(text(),'predeterminada')])[1]");
+		checkDirPredeterminada = By.xpath("//div[@class='font-size-13 font-primary--medium text--green mb-1 ']");
 		btnAceptar = By.xpath("//button[@class='btn btn-primary store-form--btn js-submit-postal']");
 		txtCP = By.xpath("//input[@id='zipCode']");
 	}
 	
 	public void IngresarCpEnModalEnvioDomicilio (String codigopostal) {
 		try{
-			Thread.sleep(4000);
+			Thread.sleep(1000);
 			}
 			catch(InterruptedException ie){
 			}
@@ -58,7 +59,7 @@ public class PageModalCP {
 			}
 		driver.findElement(IngresaTuCp).click();
 		try{
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 			}
 			catch(InterruptedException ie){
 				

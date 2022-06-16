@@ -8,11 +8,13 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.openqa.selenium.Keys;
 
 public class PageCheckout {
 	private WebDriver driver;
@@ -55,17 +57,31 @@ public class PageCheckout {
 	private By txtExteriorNuevaDir;
 	private By txtReferencia;
 	private By btnGuardarDir;
-	
-
-	
+	private By noVolverAmostrarCheck;
+    private By btnEntendido;
+    
+    private By btnPaypalcheckout;
+    private By btnPaypalSwich;
+    private By txt_correo_paypal;
+    private By txt_pass_paypal;
+    private By btn_siguiente;
+    private By btn_iniciarsesión;
+    private By btnContinuar;
+    private By AceptarYPagar;
+    private By btnPagarGuest;
+    
+    private By BuscarDirección;
+    private By form;
+    
 	public PageCheckout (WebDriver driver) {
 	this.driver = driver;
-	primerTxtCcv = By.xpath("(//input[@type='password'])[4]");
+	primerTxtCcv = By.cssSelector("input[id='securityCode']");
 	SelecthoraEnvio = By.xpath("(//button[contains(text(),'20:00 a 21:00')])[1]");
 	btnPagar = By.xpath("//button[@class='clickPayment btn btn-primary btn-block mt-3 text-center text-uppercase submit-promotion']");
+	btnPagarGuest = By.xpath("//button[@class='clickPayment btn btn-primary btn-block mt-3 text-center text-uppercase submit-promotion payGuest']");
 	btnEntendidoPopup = By.xpath("//button[@class='btn btn-primary mt-3 text-center submit-entiendo']");
-	AbrirSuperEnTuCasa = By.xpath("(//button[@class='btn btn-collapsed-div-general p-0 pl-4 pr-3'])[1]");
-	PagoContraEntrega = By.xpath("//div[@class='col p-0 pl-1 pr-2']");
+	AbrirSuperEnTuCasa = By.xpath("//button[@class='btn btn-collapsed-div-general p-0 pl-4 pr-3']");
+	PagoContraEntrega = By.xpath("(//div[@class='col-auto pl-2 ml-1 pr-1'])[2]");
 	txtPagoConraEntrega = By.xpath("//div[contains(text(),'Pago contra entrega')]");
 	SelectMetodoDePago = By.id("podMethods");
 	methodTDC = By.id("credit_card");
@@ -74,7 +90,7 @@ public class PageCheckout {
 	SumaDeEfectivo = By.xpath("//input[@class='form-control form-control--numeric cashAmount js-numeric-only onChangeEfect']");
 	HorarioEnvio = By.xpath("//div[@class='section-shipping-time-grocery col-sm-12 col-12 col-lg-8 bg-white px-1 px-sm-4 py-2 border-radius default-box-shadow border-solid-gray']");
 	SelectEntregaEnTienda = By.xpath("//label[@for='pickup-grocery']");
-	TxtTelefonoCasa = By.xpath("(//label[@class='form-control-label'])[21]");
+	TxtTelefonoCasa = By.xpath("//input[@id='validate-form-phoneBusiness']");
 	TxtTelefonoMovil = By.xpath("(//label[@class='form-control-label'])[21]");
 	BtnConfirmarTelefonos = By.xpath("//button[@class='btn btn-primary mb-3 mb-lg-0']");
 	btnAgregarTarjeta = By.xpath("(//span[@class='credit-card-label text-justify m-0 pl-2'])[1]");
@@ -91,48 +107,71 @@ public class PageCheckout {
 	terminosYcondiciones = By.xpath("//b[@class='terms-guest']");
 	btnPagarInvitado = By.xpath("//button[@class='clickPayment btn btn-primary btn-block mt-3 text-center text-uppercase submit-promotion payGuest']");
 	abrirDatosEnvio = By.xpath("(//div[@class='col-sm-1 col-md-1 col-2 col-lg-1 text-lg-right p-0 float-arrow-right sub-arrow'])[1]");
-	btnNuevaDirección = By.xpath("//button[@class='btn btn-outline-primary button-address btn-ajax-modal btn-address-modal']");
+	btnNuevaDirección = By.xpath("(//button[contains(text(),'Nueva dirección')])[1]");
 	txtExteriorNuevaDir = By.xpath("(//input[@id='streetNumber'])[2]");
 	txtReferencia = By.xpath("(//input[@id='reference'])[2]");
 	btnGuardarDir = By.xpath("(//button[@class='btn btn-primary expanded-down btn-width-address mx-lg-2 order-lg-1 btn-add-address js-save-address js-save-postal-code show-bottom'])[1]");
+	noVolverAmostrarCheck = By.xpath("//input[@id='showAgainModal']");
+	btnEntendido = By.xpath("//button[@class='btn btn-primary mt-3 text-center submit-entiendo']");
 	
+	btnPaypalcheckout = By.xpath("//li[@data-method-id=\"PayPal\"]");
+	btnPaypalSwich = By.xpath("//div[@data-funding-source=\"paypal\"]");
+	txt_pass_paypal = By.xpath(""); 
+	txt_correo_paypal = By.xpath("//input[@id='email']");
+	btn_siguiente = By.xpath("//button[@id='btnNext']");
+	btn_iniciarsesión = By.xpath("//button[@id='btnLogin']");
+	btnContinuar = By.xpath("//button[@id='fiSubmitButton']");
+	AceptarYPagar = By.xpath("//button[@id='consentButton']");
+	
+	form = By.xpath("//*[@id=\"carouselPayment\"]");
+	
+	BuscarDirección = By.xpath("//a[@id='chargeInfo']");
 	}
 	
 
-	public void SeleccionamosTDCguardada (String cvv) {
-		JavascriptExecutor jse = ((JavascriptExecutor)driver);   
-		WebElement ele = driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[2]/div[1]/div[3]/div/div/div[2]/div/form/fieldset[1]/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div[1]/div[4]/div/div[1]/div/input"));
-		jse.executeScript("arguments[0].click();", ele);
+	public void SeleccionamosTDCguardada (String cvv) {		
+		WebDriverWait wait = new WebDriverWait(driver, 60);		
+		JavascriptExecutor js = ((JavascriptExecutor)driver);   
+		WebElement ele = driver.findElement(By.xpath("(//input[@type='password'])[4]"));
+		js.executeScript("arguments[0].click();", ele);
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			}
 			catch(InterruptedException ie){
 				
 			} 
-		jse.executeScript("arguments[0].value='123';", ele);
-		driver.findElement(AbrirSuperEnTuCasa).click();
-		jse.executeScript("window.scrollTo(0, 300)");
+		js.executeScript("arguments[0].value='123';", ele);
+		js.executeScript("arguments[0].click();", ele);		
+          if( driver.findElements(noVolverAmostrarCheck).size()!=0) {
+			
+			driver.findElement(noVolverAmostrarCheck).click();	
+			driver.findElement(btnEntendido).click(); 
+		}
+		else {
+			driver.findElement(AbrirSuperEnTuCasa).click();
+		}
+		js.executeScript("window.scrollTo(0, 300)");
 		driver.findElement(HorarioEnvio).click();
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			}
 			catch(InterruptedException ie){
 				
 			} 
 		driver.findElement(SelecthoraEnvio).click();
-		jse.executeScript("window.scrollTo(0, 700)");
-		driver.findElement(btnPagar).click();
+		js.executeScript("window.scrollTo(0, 700)");
+		/*driver.findElement(btnPagar).click();*/
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			}
 			catch(InterruptedException ie){
 				
 			}
 	/*	driver.findElement(HorarioEnvio).click();
 		driver.findElement(SelecthoraEnvio).click();*/
-		driver.findElement(btnPagar).click();
+		/*driver.findElement(btnPagar).click();*/
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			}
 			catch(InterruptedException ie){
 				
@@ -155,18 +194,18 @@ public class PageCheckout {
 			} 
 		/*jse.executeScript("arguments[0].value='123';", ele);*/	
 		/*driver.findElement(AbrirSuperEnTuCasa).click();
-		jse.executeScript("window.scrollTo(0, 300)");*/
-		driver.findElement(HorarioEnvio).click();
+		jse.executeScript("window.scrollTo(0, 300)");
+		driver.findElement(HorarioEnvio).click();*/
 		try{
 			Thread.sleep(5000);
 			}
 			catch(InterruptedException ie){
 				
 			} 
-		driver.findElement(SelecthoraEnvio).click();
+	/*	driver.findElement(SelecthoraEnvio).click();
 		jse.executeScript("window.scrollTo(0, 700)");
-		driver.findElement(btnPagar).click();
-		driver.findElement(btnPagar).click(); 	
+	/*	driver.findElement(btnPagar).click();
+		driver.findElement(btnPagar).click(); */	
 		}
 	
 	public void AgregamosTDC(String NumeroTarjeta, String Nombre, String MMAA, String cvv, String CP) {
@@ -186,6 +225,52 @@ public class PageCheckout {
 		driver.findElement(btnGuardarTarjeta).click();
 	}
 	
+	public void AgregamosCuentaPaypal(String correo, String pass) {
+		driver.findElement(btnPaypalcheckout).click();
+		driver.findElement(HorarioEnvio).click();
+		driver.findElement(SelecthoraEnvio).click();
+		driver.findElement(HorarioEnvio).click();
+		driver.findElement(SelecthoraEnvio).click();
+		if (driver.findElements(terminosYcondiciones).size()!=0) {
+			JavascriptExecutor js = ((JavascriptExecutor)driver);  
+			js.executeScript("window.scrollBy(0, -500)");
+			PageCheckout addPaypal = new PageCheckout(driver);
+			addPaypal.nuevaDirecciónInvitado("64610", "calle", "11", "20", "referencia");
+			driver.findElement(terminosYcondiciones).click();
+			driver.findElement(btnPagarGuest).click();
+		}else {
+			driver.findElement(btnPagar).click();
+		}
+		
+		driver.findElement(btnPaypalSwich).click();
+		for(String winNew:driver.getWindowHandles()) {
+			driver.switchTo().window(winNew)
+;		}
+		driver.findElement(txt_correo_paypal).sendKeys(correo);
+		if (driver.findElements(btn_siguiente).size()!=0) {
+			driver.findElement(btn_siguiente).click();
+			driver.findElement(txt_pass_paypal).sendKeys(pass);
+			driver.findElement(btn_iniciarsesión).click();
+		} else {
+			driver.findElement(txt_pass_paypal).sendKeys(pass);
+			driver.findElement(btn_iniciarsesión).click();
+		}
+		driver.findElement(btnContinuar).click();
+		driver.findElement(AceptarYPagar);
+		
+	}
+	
+	
+	public void paypalCuentaAsociada() {
+		driver.findElement(btnPaypalcheckout).click();
+		driver.findElement(HorarioEnvio).click();
+		driver.findElement(SelecthoraEnvio).click();
+		driver.findElement(HorarioEnvio).click();
+		driver.findElement(SelecthoraEnvio).click();
+		driver.findElement(btnPagar).click();
+	}
+	
+
 	public void seleccionarEntregaEnTienda() {
 		try{
 			Thread.sleep(4000);
@@ -227,16 +312,15 @@ public class PageCheckout {
 	public void SuperEnTuCasa() {
 		JavascriptExecutor jse = ((JavascriptExecutor)driver); 
 
-		driver.findElement(HorarioEnvio).click();
-		jse.executeScript("window.scrollBy(0,500)");
-		driver.findElement(SelecthoraEnvio).click();	
+		/*driver.findElement(HorarioEnvio).click();*/
+		jse.executeScript("window.scrollBy(0,400)");
 		driver.findElement(SelecthoraEnvio).click();	
 
 	}
 	
 	public void SuperEnTuCasaInvitado() {
 		
-		driver.findElement(SelecthoraEnvio).click();	
+		/*driver.findElement(SelecthoraEnvio).click();	*/
 	}
 	
 	public void FincarOrdern() {
@@ -264,7 +348,7 @@ public class PageCheckout {
 			catch(InterruptedException ie){
 				
 			}  
-		driver.findElement(terminosYcondiciones).click();;
+		/*driver.findElement(terminosYcondiciones).click();;
 		try{
 			Thread.sleep(1000);
 			}
@@ -278,27 +362,61 @@ public class PageCheckout {
 			catch(InterruptedException ie){
 				
 			}  
+		driver.findElement(btnPagarInvitado).click();*/
+
+	}
+	
+	public void FincarOrdernComoInvitadoEfectivo() {
+
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.elementToBeClickable(terminosYcondiciones));	
+		JavascriptExecutor jse = ((JavascriptExecutor)driver); 
+		jse.executeScript("window.scrollBy(0,-500)");
+		driver.findElement(terminosYcondiciones).click();;
 		driver.findElement(btnPagarInvitado).click();
+		try{
+			Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+				
+			}  
+
 
 	}
 	
 	public void nuevaDirecciónInvitado(String cp, String calle, String exterior, String interior, String referencia) {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.findElement(abrirDatosEnvio).click();
-		WebDriverWait wait = new WebDriverWait(driver,30);
-		wait.until(ExpectedConditions.elementToBeClickable(btnNuevaDirección));	
+		try{
+			Thread.sleep(5000);
+			}
+			catch(InterruptedException ie){
+			}
+		JavascriptExecutor js = ((JavascriptExecutor)driver); 
+		js.executeScript("window.scrollBy(0, -500)");
 		driver.findElement(btnNuevaDirección).click();
 		try{
 			Thread.sleep(5000);
 			}
 			catch(InterruptedException ie){
 			}
+		driver.findElement(txtCP).clear();
 		driver.findElement(txtCP).sendKeys(cp);
-		driver.findElement(txtCalle).sendKeys(calle);
-		driver.findElement(txtExteriorNuevaDir).sendKeys(exterior);
-		driver.findElement(txtInterior).sendKeys(interior);
-		driver.findElement(txtReferencia).sendKeys(referencia);
-		driver.findElement(btnGuardarDir).click();
+		if (driver.findElements(BuscarDirección).size()!=0) {
+			driver.findElement(BuscarDirección).click();
+			driver.findElement(txtCalle).sendKeys(calle);
+			driver.findElement(txtExteriorNuevaDir).sendKeys(exterior);
+			driver.findElement(txtInterior).sendKeys(interior);
+			driver.findElement(txtReferencia).sendKeys(referencia);
+			driver.findElement(btnGuardarDir).click();
+		}
+		else {
+			driver.findElement(txtCalle).sendKeys(calle);
+			driver.findElement(txtExteriorNuevaDir).sendKeys(exterior);
+			driver.findElement(txtInterior).sendKeys(interior);
+			driver.findElement(txtReferencia).sendKeys(referencia);
+			driver.findElement(btnGuardarDir).click();
+		}
 	}
 	
 	
