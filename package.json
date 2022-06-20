@@ -1,0 +1,21 @@
+{
+ "name": "multiple-cucumber-html-reporter",
+ "version": "1.0.0",
+ "description": "automation framwork using selenium WebDriver, cucumber and java",
+ "main": "index.js",
+ "scripts": {
+	"report": "node index.js"	
+},
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/wswebcreation/multiple-cucumber-html-reporter.git"
+ },
+ "author": "wswebcreation",
+ "bugs": {
+  "url": "https://github.com/wswebcreation/multiple-cucumber-html-reporter/issues"
+ },
+ "homepage": "https://github.com/wswebcreation/multiple-cucumber-html-reporter#readme",
+ "devDependencies": {
+  "multiple-cucumber-html-reporter": "^1.20.0"
+ }
+}
