@@ -40,7 +40,7 @@ public class PageValidarCart {
 	
 	public void validarCarro() {
 	
-		driver.get("https://development.soriana.com/carrito");
+		driver.get("https://bgbd-013.sandbox.us01.dx.commercecloud.salesforce.com/s/Soriana/carrito");
 
 	/*
 	if( driver.findElements(productoUno).size()!=0) {
@@ -58,7 +58,17 @@ public class PageValidarCart {
 		else {
 			driver.findElement(btnContinuarComprando).click();
 		}*/
+		try{
+			Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+			}
 	if( driver.findElement(txtTuCarroEstaVacio).isDisplayed()){
+		try{
+			Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+			}
 		driver.findElement(btnContinuarComprando).click();
 	}else {
 		driver.findElement(btnVaciarCarrito).click();	
@@ -78,11 +88,11 @@ public class PageValidarCart {
 	public void IrCheckout() {
 	
 		try{
-			Thread.sleep(2200);
+			Thread.sleep(2000);
 			}
 			catch(InterruptedException ie){
 			}
-		driver.get("https://development.soriana.com/carrito");
+		driver.get("https://bgbd-013.sandbox.us01.dx.commercecloud.salesforce.com/s/Soriana/carrito");
       if( driver.findElements(productoUno).size()!=0) {
   		JavascriptExecutor jse = ((JavascriptExecutor)driver);   
 		jse.executeScript("window.scrollTo(0, 600)");

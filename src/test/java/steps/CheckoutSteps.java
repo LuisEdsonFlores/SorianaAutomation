@@ -39,7 +39,7 @@ public class CheckoutSteps {
 	 	System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver1.exe");
 	 	driver = new ChromeDriver();
 	 	driver.manage().window().maximize();
-	 	driver.get("https://storefront:soria2021@development.soriana.com/");
+	 	driver.get("https://storefront:soria2021@bgbd-013.sandbox.us01.dx.commercecloud.salesforce.com/s/Soriana/home");
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	}
 	

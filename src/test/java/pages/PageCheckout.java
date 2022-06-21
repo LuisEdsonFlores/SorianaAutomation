@@ -72,6 +72,7 @@ public class PageCheckout {
     
     private By BuscarDirección;
     private By form;
+    private By tarjetaGuradada;
     
 	public PageCheckout (WebDriver driver) {
 	this.driver = driver;
@@ -122,7 +123,7 @@ public class PageCheckout {
 	btn_iniciarsesión = By.xpath("//button[@id='btnLogin']");
 	btnContinuar = By.xpath("//button[@id='fiSubmitButton']");
 	AceptarYPagar = By.xpath("//button[@id='consentButton']");
-	
+	tarjetaGuradada = By.xpath("(//*[@id=\"Path_33782-2\"])[2]");
 	form = By.xpath("//*[@id=\"carouselPayment\"]");
 	
 	BuscarDirección = By.xpath("//a[@id='chargeInfo']");
@@ -130,9 +131,17 @@ public class PageCheckout {
 	
 
 	public void SeleccionamosTDCguardada (String cvv) {		
+		
+		try{
+			Thread.sleep(8500);
+			}
+			catch(InterruptedException ie){
+				
+			} 
+		
 		WebDriverWait wait = new WebDriverWait(driver, 60);		
 		JavascriptExecutor js = ((JavascriptExecutor)driver);   
-		WebElement ele = driver.findElement(By.xpath("(//input[@type='password'])[4]"));
+		WebElement ele = driver.findElement(By.xpath("(//input[@class='custom-control-input  form-check-input'])[2]"));
 		js.executeScript("arguments[0].click();", ele);
 		try{
 			Thread.sleep(500);
