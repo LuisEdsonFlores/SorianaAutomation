@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -33,22 +35,17 @@ public class PageConfirmacionOrden {
 	}
 	
 	public void ConfirmacionDeOrden() throws IOException {
-		try{
-			Thread.sleep(6000);
-			}
-			catch(InterruptedException ie){
-			}	
-		
-		TakesScreenshot miScreen = ((TakesScreenshot)driver);
-		File destinoArchivo = new File ("..\\Soriana\\CapturasDePantalla\\screen.png");
-		File archivo = miScreen.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(archivo, destinoArchivo);
-
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		ewait.until(ExpectedConditions.elementToBeClickable(GraciasPorTuCompra));
 		String actualTitle = driver.getTitle();
 		String expectedTitle = "Confirmación de pedido | Soriana";
 		if(driver.findElements(GraciasPorTuCompra).size()!=0){
 		Assert.assertEquals(actualTitle, expectedTitle);
 		System.out.println("la orden se finco correctamente");
+		TakesScreenshot miScreen = ((TakesScreenshot)driver);
+		File destinoArchivo = new File ("..\\Soriana\\CapturasDePantalla\\screen.png");
+		File archivo = miScreen.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(archivo, destinoArchivo);
 		}
 		else {
 			System.out.println("la orden NO se finco correctamente");

@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class PagePDPaddTocart {
@@ -27,18 +29,22 @@ public class PagePDPaddTocart {
 
 	
 	public void AgregarProductoAlCarrito ( ) {
-		try{
-			Thread.sleep(800);
-			}
-			catch(InterruptedException ie){
-			}
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		ewait.until(ExpectedConditions.elementToBeClickable(Medio));
 		if( driver.findElements(Medio).size()!=0) {
-			
+			WebDriverWait wait = new WebDriverWait (driver,50);
+			wait.until(ExpectedConditions.elementToBeClickable(Maduro));
 	         driver.findElement(Maduro).click();
 	         
 		}
 		if (driver.findElements(btnAgregar2).size()!=0) {
 			driver.findElement(btnAgregar2).click();
+
+			try{
+				Thread.sleep(5000);
+				}
+				catch(InterruptedException ie){
+				}
 		}
 			else{
 				System.out.println("No tiene stock el producto");
