@@ -2,14 +2,19 @@ package steps;
 
 import static org.testng.Assert.assertEquals;
 
+import java.awt.AWTException;
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 
 import Helpers.WebDriverManager;
 import io.cucumber.java.en.Given;
@@ -17,6 +22,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.PageBase;
 import pages.PageBuscarProducto;
+import pages.PageCar;
 import pages.PageCategorias;
 import pages.PageCerrarNavegador;
 import pages.PageCheckout;
@@ -36,7 +42,7 @@ public class CheckoutSteps {
 	public void IrASoriana() {
 
 	 	DesiredCapabilities caps = new DesiredCapabilities ();
-	 	System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver1.exe");
+	 	System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");
 	 	driver = new ChromeDriver();
 	 	driver.manage().window().maximize();
 	 	driver.get("https://storefront:soria2021@development.soriana.com/");
@@ -49,7 +55,7 @@ public class CheckoutSteps {
 	}
     
 	@When("El usuario inicia sesion")
-	public void El_usuario_inicia_sesion() {
+	public void El_usuario_inicia_sesion() throws HeadlessException, InvalidFormatException, IOException, AWTException, InterruptedException {
 		PageLogin login = new PageLogin(driver);
 		login.Iniciasesion("luflores@ts4.mx","qa123456");
 	}
@@ -72,6 +78,13 @@ public class CheckoutSteps {
 		modal.IngresarCpEnModalEnvioDomicilio("64610");
 	}
 	
+	@Then("El usuario selecciona un CP ")
+	public void El_usuario_selecciona_un_CP_1_0 (){
+		PageModalCP modal = new PageModalCP(driver);
+		modal.ingresaCPmodalPiclup("64610");
+	}
+	
+	
 	@Then("El usuario selecciona un CP como invitado")
 	public void El_usuario_selecciona_un_CP_como_invitado (){
 		PageModalCP modalInvitado = new PageModalCP(driver);
@@ -82,7 +95,7 @@ public class CheckoutSteps {
 	@When("el usuario realiza la busqueda de un producto grosery")
 	public void el_usuario_realiza_la_busqueda_de_un_producto() {
 		PageBuscarProducto  BuscarProducto = new PageBuscarProducto(driver);
-		BuscarProducto.BuscarProducto("fresas");
+		BuscarProducto.BuscarProducto("melon");
 		
 	}
 	
@@ -108,6 +121,32 @@ public class CheckoutSteps {
 		
 	}
 	
+	@When("Agrega producto al Carrito")
+	public void Agrega_producto_al_Carrito() {
+		PagePDPaddTocart agregaracarritoConCupon = new PagePDPaddTocart(driver);
+		agregaracarritoConCupon.AgregarProductoConCuponAlCarrito();
+		
+	}
+	
+	
+	@When("El usuario va a el carrito")
+	public void El_usuario_va_a_el_carrito() {
+		PageCar irCarro = new PageCar(driver);
+        irCarro.irAcarrito();
+	}
+	
+	@When("Agrego el cupon {string}")
+	public void Agrego_el_cupon (String cupon) {
+		PageCar agregoCupon = new PageCar(driver);
+		agregoCupon.agregarCupon(cupon);
+	}
+	
+	@When("el usuario realiza la busqueda de el producto {string} que tenga descuento y_o con cupon")
+	public void el_usuario_realiza_la_busqueda_de_el_producto_que_tenga_descuento_con_cupon (String productoDescCupon) {
+		PageBuscarProducto buscarProductoCupon = new PageBuscarProducto (driver);
+		buscarProductoCupon.buscarProductoConDescuentoCupon(productoDescCupon);
+	}
+	
 	@Then("Valida si se agrego producto a carrito y voy al checkout")
 	public void Valida_si_se_agrego_producto_a_carrito_y_voy_al_checkout() {
         PageValidarCart iralcheckout = new PageValidarCart(driver);
@@ -122,9 +161,10 @@ public class CheckoutSteps {
 	
 	
 	@When("^el usuario finca la orden con tdc$")
-	public void el_usuario_finca_la_orden_con_tdc() {
+	public void el_usuario_finca_la_orden_con_tdc() throws IOException {
 		PageCheckout fincartdc = new PageCheckout(driver);
 		fincartdc.SeleccionamosTDCguardada("123");
+		
 		
 	}
 	
@@ -187,7 +227,6 @@ public class CheckoutSteps {
 	public void el_usuario_finca_la_orden_con_vale() {
 		PageCheckout selectVales = new PageCheckout(driver);
 		selectVales.seleccionarPagoContraEntregaVales();
-		selectVales.SuperEnTuCasa();
 		selectVales.FincarOrdern();
 		
 	}
@@ -213,9 +252,9 @@ public class CheckoutSteps {
 	@When("^el usuario finca la orden con efectivo$")
 	public void el_usuario_finca_la_orden_con_efectivo() {
 		PageCheckout selectEfectivo = new PageCheckout(driver);
-		selectEfectivo.seleccionarPagoContraEntregaEfectivo();
 		selectEfectivo.SuperEnTuCasa();
-		/*selectEfectivo.FincarOrdern();*/
+		selectEfectivo.seleccionarPagoContraEntregaEfectivo();
+		selectEfectivo.FincarOrdern();
 	}
 	
 	@When("^el usuario finca la orden con efectivo en entrega en tienda$")
@@ -250,7 +289,7 @@ public class CheckoutSteps {
 		select.seleccionarEntregaEnTienda();
 
 	}
-		@Then("el sistema valida que se finque bien la orden")
+		@When("el sistema valida que se finque bien la orden")
 		public void el_sistema_valida_que_se_finque_bien_la_orden() throws IOException {
 			PageConfirmacionOrden confirmaOrden = new PageConfirmacionOrden (driver);
 			confirmaOrden.ConfirmacionDeOrden();
@@ -279,5 +318,7 @@ public class CheckoutSteps {
 		}
 		
 
+	
+		
 	
 }
