@@ -93,13 +93,15 @@ public class PageCheckout {
     private By Aceptarcvv;
     private By listMSI;
     private By aUnPago;
+    private By metodosDePagoSecc;
+    private By seleccionarPrimeraTDC;
     
 	public PageCheckout (WebDriver driver) {
 	this.driver = driver;
 	primertdc = By.cssSelector("//*[@id=\"Path_33866\"]");
 	seleccionarFecha = By.xpath("//div[@class='times-week__day times-week__day-menu text-center space-slot-content d-none bottom activeSecondViwer']");
 	
-	SelecthoraEnvio = By.xpath("(//div[contains(text(),'10:00 a 11:00')])[1]");
+	SelecthoraEnvio = By.xpath("(//div[@class='col-12 px-0 times-week__info-inner checkout-slot-block'])[7]");
 	btnPagar = By.xpath("(//button[contains(text(),'Pagar')])[1]");
 	btnPagarGuest = By.xpath("//button[@class='clickPayment btn btn-primary btn-block mt-3 text-center text-uppercase submit-promotion payGuest']");
 	btnEntendidoPopup = By.xpath("//button[@class='btn btn-primary mt-3 text-center submit-entiendo']");
@@ -158,6 +160,8 @@ public class PageCheckout {
 	
 	listMSI = By.xpath("//select[@id='clearCouwn']");
 	aUnPago = By.xpath("//option[@id='inpgro-0']");
+	metodosDePagoSecc = By.xpath("//button[@class='btn pr-0 mr-1 btn-collapsed-div-payment2 getButtomCall']");
+	seleccionarPrimeraTDC = By.xpath("(//div[@class='row col-12 p-0 m-0 cursor-pointer'])[1]");
 	
 	}
 	
@@ -167,34 +171,39 @@ public class PageCheckout {
 		screenshot = ((TakesScreenshot)driver ).getScreenshotAs(OutputType.FILE);
 		WebDriverWait ewait = new WebDriverWait (driver,20);
 		driver.findElement(seleccionarFecha).click();
-		try{
-			Thread.sleep(1500);
-			}
-			catch(InterruptedException ie){
-				
-			} 
+		ewait.until(ExpectedConditions.elementToBeClickable(SelecthoraEnvio));
 		driver.findElement(SelecthoraEnvio).click();
-		JavascriptExecutor jse = ((JavascriptExecutor)driver);   
-		WebElement elem = driver.findElement(By.xpath("(//div[@class='col-12 col-lg-12 aling-card margin-card p-0 m-0 size-card-icon isNotSelected'])[1]"));
-		jse.executeScript("arguments[0].click();", elem);			
-	/*	JavascriptExecutor js = ((JavascriptExecutor)driver);   
-		js.executeScript("window.scrollTo(0, 300)");*/
-		ewait.until(ExpectedConditions.elementToBeClickable(btnPagar));
-		driver.findElement(btnPagar).click();
+		ewait.until(ExpectedConditions.elementToBeClickable(metodosDePagoSecc));
+		driver.findElement(metodosDePagoSecc).click();
+	driver.findElement(seleccionarPrimeraTDC).click();
+	try{
+		Thread.sleep(2000);
+		}
+		catch(InterruptedException ie){
+			
+		} 		
+	driver.findElement(btnPagar).click();
 		
-		if (driver.findElements(listMSI).size()!=0) {
+	/*	if (driver.findElements(listMSI).size()!=0) {
 			ewait.until(ExpectedConditions.elementToBeClickable(listMSI));
 	        driver.findElement(listMSI).click();
 			ewait.until(ExpectedConditions.elementToBeClickable(aUnPago));
 			driver.findElement(aUnPago).click();
+			ewait.until(ExpectedConditions.elementToBeClickable(btnPagar));
+			driver.findElement(btnPagar).click();
 		}else {
 			System.out.println("No hay MSI");
-		}		
-		ewait.until(ExpectedConditions.elementToBeClickable(btnPagar));
-		driver.findElement(btnPagar).click();
+		}	*/	
+		
 		ewait.until(ExpectedConditions.elementToBeClickable(IngresaCvv));
 		driver.findElement(IngresaCvv).sendKeys("123");
-		driver.findElement(Aceptarcvv).click();		
+		driver.findElement(Aceptarcvv).click();	
+		try{
+			Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+				
+			} 	
 	/*	FileUtils.copyFile(screenshot, new File("\"..\\Soriana\\CapturasDePantalla\\screen.png"+"Error"+ System.currentTimeMillis()+".png"));*/
 		
 		
@@ -333,12 +342,17 @@ public class PageCheckout {
 	}
 	
 	public void SuperEnTuCasa() {
-		JavascriptExecutor jse = ((JavascriptExecutor)driver);   
-		WebElement elem = driver.findElement(By.xpath("(//div[@class='times-week__day-prefix size-calc-12-14 font-primary--regular'])[2]"));
-		jse.executeScript("arguments[0].click();", elem);	
-		WebDriverWait ewait = new WebDriverWait (driver,20);
-		WebElement horaEnvio = driver.findElement(By.xpath("(//button[contains(text(),'13:00 a 14:00')])[2]"));
-		jse.executeScript("arguments[0].click();", horaEnvio);		
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		driver.findElement(seleccionarFecha).click();
+		try{
+			Thread.sleep(4000);
+			}
+			catch(InterruptedException ie){
+				
+			}
+		driver.findElement(SelecthoraEnvio).click();
+		ewait.until(ExpectedConditions.elementToBeClickable(metodosDePagoSecc));
+		driver.findElement(metodosDePagoSecc).click();	
 		
 	}
 	

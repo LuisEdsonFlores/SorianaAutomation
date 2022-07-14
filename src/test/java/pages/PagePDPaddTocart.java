@@ -50,4 +50,20 @@ public class PagePDPaddTocart {
 				System.out.println("No tiene stock el producto");
 			}				
 	}
+	
+	public void AgregarProductoConCuponAlCarrito ( ) {		
+		if (driver.findElements(btnAgregar2).size()!=0) {
+			driver.findElement(btnAgregar2).click();
+			try{
+				Thread.sleep(5000);
+				}
+				catch(InterruptedException ie){
+				}
+		}
+			else{
+				System.out.println("No tiene stock el producto");
+			}				
+	}
+	
+	
 }

@@ -1,7 +1,9 @@
 package pages;
 
+import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -40,21 +42,21 @@ public class PageValidarCart {
 	}
 	
 	public void validarCarro() {
+		
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+				.withTimeout(Duration.ofSeconds(30))
+				.pollingEvery(Duration.ofSeconds(7))
+                .ignoring(NoSuchElementException.class);
+		try {
+		WebElement irCarrito = wait.until(new Function <WebDriver, WebElement>(){
+			public WebElement apply(WebDriver driver ) {
+			      return driver.findElement(By.xpath("(//span[@class='minicart-total-value font-primary--bold'])[2]"));
+			}});
+		irCarrito.click();
+		}	catch(Exception ie){
+		}
+	
 		WebDriverWait ewait = new WebDriverWait (driver,80);
-		
-		try{
-			Thread.sleep(5000);
-			}
-			catch(InterruptedException ie){
-			}
-		
-		driver.findElement(irCarrito).click();
-		
-		try{
-			Thread.sleep(1500);
-			}
-			catch(InterruptedException ie){
-			}
 	if( driver.findElement(txtTuCarroEstaVacio).isDisplayed()){
 		ewait.until(ExpectedConditions.elementToBeClickable(btnContinuarComprando));
 		driver.findElement(btnContinuarComprando).click();
@@ -65,6 +67,7 @@ public class PageValidarCart {
 		ewait.until(ExpectedConditions.elementToBeClickable(btnContinuarComprando));
 		driver.findElement(btnContinuarComprando).click();
 	}
+	
 	
 		
 		

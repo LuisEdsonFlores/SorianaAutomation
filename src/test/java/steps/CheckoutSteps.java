@@ -121,10 +121,30 @@ public class CheckoutSteps {
 		
 	}
 	
+	@When("Agrega producto al Carrito")
+	public void Agrega_producto_al_Carrito() {
+		PagePDPaddTocart agregaracarritoConCupon = new PagePDPaddTocart(driver);
+		agregaracarritoConCupon.AgregarProductoConCuponAlCarrito();
+		
+	}
+	
+	
+	@When("El usuario va a el carrito")
+	public void El_usuario_va_a_el_carrito() {
+		PageCar irCarro = new PageCar(driver);
+        irCarro.irAcarrito();
+	}
+	
 	@When("Agrego el cupon {string}")
 	public void Agrego_el_cupon (String cupon) {
 		PageCar agregoCupon = new PageCar(driver);
 		agregoCupon.agregarCupon(cupon);
+	}
+	
+	@When("el usuario realiza la busqueda de el producto {string} que tenga descuento y_o con cupon")
+	public void el_usuario_realiza_la_busqueda_de_el_producto_que_tenga_descuento_con_cupon (String productoDescCupon) {
+		PageBuscarProducto buscarProductoCupon = new PageBuscarProducto (driver);
+		buscarProductoCupon.buscarProductoConDescuentoCupon(productoDescCupon);
 	}
 	
 	@Then("Valida si se agrego producto a carrito y voy al checkout")
@@ -232,8 +252,8 @@ public class CheckoutSteps {
 	@When("^el usuario finca la orden con efectivo$")
 	public void el_usuario_finca_la_orden_con_efectivo() {
 		PageCheckout selectEfectivo = new PageCheckout(driver);
-		selectEfectivo.seleccionarPagoContraEntregaEfectivo();
 		selectEfectivo.SuperEnTuCasa();
+		selectEfectivo.seleccionarPagoContraEntregaEfectivo();
 		selectEfectivo.FincarOrdern();
 	}
 	

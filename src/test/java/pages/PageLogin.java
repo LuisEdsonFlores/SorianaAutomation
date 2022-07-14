@@ -71,8 +71,11 @@ public class PageLogin {
 		driver.findElement(ButtonIniciaSesion).click();
 	/*	imprimeEvidencia.PasoDelScript("2.- El usuario Inicio sesión", driver);
 		imprimeEvidencia.GeneraEvidencia("Step1.docx");*/
-		driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
-
+		try{
+			Thread.sleep(5000);
+			}
+			catch(InterruptedException ie){
+			}
 
 	}
 	
