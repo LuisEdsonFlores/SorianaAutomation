@@ -81,11 +81,7 @@ Then Validamos que el carro de compras este vacio
 Then El usuario selecciona un CP
 And el usuario realiza la busqueda de el producto 'cocina' que tenga descuento y_o con cupon
 And Agrega producto al Carrito
-And el usuario realiza la busqueda de el producto 'melon' que tenga descuento y_o con cupon
 When El usuario va a el carrito
-
-Then El usuario coloca el trespordos
-
 And Agrego el cupon '1CHOCHO25'
 Then Valida si se agrego producto a carrito y voy al checkout
 And el usuario finca la orden con efectivo

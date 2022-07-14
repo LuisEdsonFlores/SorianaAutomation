@@ -6,7 +6,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-		features="src/test/java/features/checkout_usuario_logeado.feature",
+		features="src/test/java/features/Checkout3UsuarioRegstrado",
 		glue="steps",
 		tags = "not @wip and not @quarentine",
 		plugin  = {"json:target/report/cucumber_reports.json"}
@@ -30,4 +30,3 @@ public class runner extends AbstractTestNGCucumberTests{
 }
 
 }
-
