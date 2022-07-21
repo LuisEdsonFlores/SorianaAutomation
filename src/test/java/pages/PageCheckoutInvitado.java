@@ -28,7 +28,7 @@ public class PageCheckoutInvitado {
 	
 	public PageCheckoutInvitado (WebDriver driver) {
 		this.driver = driver;
-		btnContinuarComoInvitado = By.xpath("(//button[@class='btn btn-outline-primary col-12 btn-modal-guest'])[1]");
+		btnContinuarComoInvitado = By.xpath("(//button[@class='btn btn-login-outline-primary col-12 btn-modal-guest'])[1]");
 		txtNombre = By.xpath("(//input[@id='registration-form-fname'])[2]");
 		txtApellidoPaterno = By.xpath("(//input[@id='registration-form-lname'])[2]");
 		txtEmail = By.xpath("(//input[@id='registration-form-email'])[2]");

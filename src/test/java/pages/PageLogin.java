@@ -72,7 +72,7 @@ public class PageLogin {
 	/*	imprimeEvidencia.PasoDelScript("2.- El usuario Inicio sesión", driver);
 		imprimeEvidencia.GeneraEvidencia("Step1.docx");*/
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(6000);
 			}
 			catch(InterruptedException ie){
 			}
@@ -82,11 +82,22 @@ public class PageLogin {
 
 		
 	
-	public void iniciaComoInvitado() {
-		WebDriverWait ewait = new WebDriverWait (driver,20);
-		ewait.until(ExpectedConditions.elementToBeClickable(NoSuscribir));
-		driver.findElement(NoSuscribir).click();	 	
-		
+	public void iniciaComoInvitado() throws HeadlessException, InvalidFormatException, IOException, AWTException, InterruptedException {
+		utilizafile imprimeEvidencia = new utilizafile();
+
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+	
+		ewait.until(ExpectedConditions.elementToBeClickable(cerrarModal));
+		driver.findElement(cerrarModal).click();
+	 	driver.findElement(Ini_Registrate).click();
+	 	ewait.until(ExpectedConditions.elementToBeClickable(NoSuscribir));
+		driver.findElement(NoSuscribir).click();
+		try{
+			Thread.sleep(6000);
+			}
+			catch(InterruptedException ie){
+			}
+
 	}
 	
 	

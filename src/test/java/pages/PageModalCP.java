@@ -27,19 +27,83 @@ public class PageModalCP {
 	private By txtCP;
 	private By textoIngresaCpPickup;
 	private By EnvioaDomicilio;
+	private By btnAceptarcp;
+	private By linkIniciarSesion;
+	private By seleccionarPrimerTienda;
+	private By btnAceptarPickup;
+	private By invitadoLinkIS;
+	private By btnAceptarInvitado;
 	
 	public  PageModalCP (WebDriver driver) {
 		this.driver = driver;
 		IngresaTuCp = By.xpath("//a[@class='common-header__postal-code maps-show']");
-		Pickup = By.id("blockpickup");
+		Pickup = By.xpath("//div[@class='opacity-selector-modal pickup-pc js-click-shadow']");
 		EnvioaDomicilio = By.xpath("(//div[@class='opacity-selector-modal homeDelivery-pc js-click-shadow'])[1]");
+		invitadoLinkIS = By.xpath("(//a[@id='refLogin'])[2]");
 		txtCPpickup = By.id("store-postal-code-header");
 		txtCPDomicilio = By.id("zipCode");
 		checkDirPredeterminada = By.xpath("(//div[@class='font-size-15 font-primary--medium mb-1'])[1]");
 		btnAceptar = By.xpath("//button[@class='btn btn-primary store-form--btn js-submit-postal']");
+		btnAceptarInvitado = By.xpath("//button[@class='btn btn-primary btn-modal-direction px-0 py-1 ml-2 js-modal-cp-direccion']");
 		txtCP = By.xpath("//input[@id='zipCode']");
+		btnAceptarcp = By.xpath("(//button[contains(text(),'Aceptar')])[2]");
 		textoIngresaCpPickup = By.xpath("//p[@class='font-primary--medium mx-0 store-locator__search-title mb-3 text-general-modal']");
+		linkIniciarSesion = By.xpath("//p[contains(text(),'Elige')]");
+	    seleccionarPrimerTienda = By.xpath("(//div[@class='title-tab font-size-15 font-primary--semi-bold mb-3'])[1]");
+	    btnAceptarPickup = By.xpath("//button[@class='btn btn-primary btn-modal-direction px-0 py-1 ml-2 js-select-store-modal']");
+	
 	}
+	
+
+	public void IngresaCpEnModalEnvioDomicilio (String codigopostal) {
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		ewait.until(ExpectedConditions.elementToBeClickable(IngresaTuCp));
+		driver.findElement(IngresaTuCp).click();
+		try{
+			Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+			}
+		driver.findElement(txtCP).click();
+		driver.findElement(txtCP).sendKeys(codigopostal);
+		driver.findElement(btnAceptarcp).click();
+			
+				
+	}
+	
+	
+	public void seleccionamosTiendaPickup() {
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		ewait.until(ExpectedConditions.elementToBeClickable(IngresaTuCp));
+		driver.findElement(IngresaTuCp).click();
+		try{
+			Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+			}
+		
+		if(driver.findElement(linkIniciarSesion).isDisplayed()) {
+			WebDriverWait ewaitt = new WebDriverWait (driver,50);
+			ewaitt.until(ExpectedConditions.elementToBeClickable(Pickup));
+        	driver.findElement(Pickup).click();
+			ewaitt.until(ExpectedConditions.elementToBeClickable(seleccionarPrimerTienda));
+			driver.findElement(seleccionarPrimerTienda).click();	
+			driver.findElement(btnAceptarPickup).click();
+			}
+			else {
+				try{
+					Thread.sleep(2700);
+					}
+					catch(InterruptedException ie){
+					}
+				driver.findElement(seleccionarPrimerTienda).click();
+				driver.findElement(btnAceptarPickup).click();
+
+			}	
+		
+		
+	}
+	
 	
 	public void IngresarCpEnModalEnvioDomicilio (String codigopostal) {
 		WebDriverWait ewait = new WebDriverWait (driver,50);
@@ -92,10 +156,10 @@ public class PageModalCP {
 		WebDriverWait ewait = new WebDriverWait (driver,50);
 		ewait.until(ExpectedConditions.elementToBeClickable(IngresaTuCp));
 		driver.findElement(IngresaTuCp).click();
-		ewait.until(ExpectedConditions.elementToBeClickable(EnvioaDomicilio));
-		driver.findElement(EnvioaDomicilio).click();
+		ewait.until(ExpectedConditions.elementToBeClickable(invitadoLinkIS));
+		driver.findElement(txtCPDomicilio).click();
 		driver.findElement(txtCP).sendKeys(CPinvitado);
-		driver.findElement(btnAceptar).click();
+		driver.findElement(btnAceptarInvitado).click();
 		
        	
 	}

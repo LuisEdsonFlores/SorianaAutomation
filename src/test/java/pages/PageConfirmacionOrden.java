@@ -25,13 +25,16 @@ public class PageConfirmacionOrden {
 
 	
 	private By GraciasPorTuCompra;
-	
+	private By numeroDeOrden;
+	public static String NumeroOrdenFinal = "";
 	
 	public PageConfirmacionOrden (WebDriver driver) {
         this.driver = driver;
         
 		GraciasPorTuCompra = By.xpath("//div[@class='d-flex justify-content-center font-size-20 font-size-lg-32 mb-5 font-primary--semi-bold']");
-
+        numeroDeOrden = By.xpath("//h4[contains(text(),'000')]");
+		
+		
 	}
 	
 	public void ConfirmacionDeOrden() throws IOException {
@@ -39,6 +42,10 @@ public class PageConfirmacionOrden {
 		ewait.until(ExpectedConditions.elementToBeClickable(GraciasPorTuCompra));
 		String actualTitle = driver.getTitle();
 		String expectedTitle = "Confirmación de pedido | Soriana";
+
+		NumeroOrdenFinal = driver.findElement(numeroDeOrden).getText();
+		System.out.println(NumeroOrdenFinal);
+		
 		if(driver.findElements(GraciasPorTuCompra).size()!=0){
 		Assert.assertEquals(actualTitle, expectedTitle);
 		System.out.println("la orden se finco correctamente");
@@ -52,6 +59,8 @@ public class PageConfirmacionOrden {
 
 		}
 	}
+	
+	
 	
 	
 }

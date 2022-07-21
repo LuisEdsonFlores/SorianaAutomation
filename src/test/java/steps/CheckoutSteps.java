@@ -20,6 +20,7 @@ import Helpers.WebDriverManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.PageBM;
 import pages.PageBase;
 import pages.PageBuscarProducto;
 import pages.PageCar;
@@ -61,7 +62,7 @@ public class CheckoutSteps {
 	}
 	
 	@When("El usuario continua como invitado")
-	public void El_usuario_continua_como_invitado() {
+	public void El_usuario_continua_como_invitado() throws HeadlessException, InvalidFormatException, IOException, AWTException, InterruptedException {
 		PageLogin invitado = new PageLogin(driver);
 		invitado.iniciaComoInvitado();
 	}
@@ -75,13 +76,27 @@ public class CheckoutSteps {
 	@Then("El usuario selecciona un CP")
 	public void El_usuario_selecciona_un_CP (){
 		PageModalCP modal = new PageModalCP(driver);
-		modal.IngresarCpEnModalEnvioDomicilio("64610");
+		modal.IngresarCpEnModalEnvioDomicilio("64100");
 	}
+	
+	@Then("El usuario ingresa el cp {string}")
+	public void El_usuario_Ingresa_el_cp(String cp) {
+		PageModalCP ingresacp = new PageModalCP(driver);
+		ingresacp.IngresaCpEnModalEnvioDomicilio(cp);
+	}
+	
+	@Then("El usuario selecciona una tienda para recoger en ella")
+	public void El_usuario_selecciona_una_tienda_para_recoger_en_ella() {
+		PageModalCP seleccionarPrimeraTienda = new PageModalCP(driver);
+		seleccionarPrimeraTienda.seleccionamosTiendaPickup();
+	}
+	
+	
 	
 	@Then("El usuario selecciona un CP ")
 	public void El_usuario_selecciona_un_CP_1_0 (){
 		PageModalCP modal = new PageModalCP(driver);
-		modal.ingresaCPmodalPiclup("64610");
+		modal.ingresaCPmodalPiclup("64100");
 	}
 	
 	
@@ -139,6 +154,12 @@ public class CheckoutSteps {
 	public void Agrego_el_cupon (String cupon) {
 		PageCar agregoCupon = new PageCar(driver);
 		agregoCupon.agregarCupon(cupon);
+	}
+	
+	@When("El usuario aplica el trespordos")
+	public void El_usuario_Aplica_el_trespordos() {
+		PageCar Agrego3x2 = new PageCar(driver);
+		Agrego3x2.agregar3x2();
 	}
 	
 	@When("el usuario realiza la busqueda de el producto {string} que tenga descuento y_o con cupon")
@@ -231,6 +252,12 @@ public class CheckoutSteps {
 		
 	}
 	
+	@Then("^el usuario finca la orden con pago contra entrega tdc$")
+	public void el_usuario_finca_la_orden_con_pago_contra_entrega_tdc(){
+		PageCheckout SelectTDCpagoCE = new PageCheckout(driver);
+		SelectTDCpagoCE.seleccionarPagoContraEntregatdc(); 		
+	}
+	
 	@When("^el usuario finca la orden con vales como invitado$")
 	public void el_usuario_finca_la_orden_con_vales_como_invitado() {
 		PageCheckout selectVales = new PageCheckout(driver);
@@ -315,6 +342,16 @@ public class CheckoutSteps {
 			PageCategorias categoria = new PageCategorias (driver);
 			categoria.ValidarCategoriaVinosLicoresCervezas();
 			
+		}
+		
+		
+		
+		@Given("El sistema valida en el BM la orden")
+		public void El_sistema_valida_en_el_BM_la_orden() {
+			PageBM BM = new PageBM(driver);
+			BM.IrAlBM();
+			BM.IniciarSesionBM("luflores@ts4.mx", "Test123456");
+			BM.irOrdenes();
 		}
 		
 

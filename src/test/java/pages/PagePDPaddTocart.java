@@ -53,6 +53,11 @@ public class PagePDPaddTocart {
 	
 	public void AgregarProductoConCuponAlCarrito ( ) {		
 		if (driver.findElements(btnAgregar2).size()!=0) {
+			try{
+				Thread.sleep(2000);
+				}
+				catch(InterruptedException ie){
+				}
 			driver.findElement(btnAgregar2).click();
 			try{
 				Thread.sleep(5000);

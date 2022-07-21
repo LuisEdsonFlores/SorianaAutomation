@@ -101,7 +101,7 @@ public class PageCheckout {
 	primertdc = By.cssSelector("//*[@id=\"Path_33866\"]");
 	seleccionarFecha = By.xpath("//div[@class='times-week__day times-week__day-menu text-center space-slot-content d-none bottom activeSecondViwer']");
 	
-	SelecthoraEnvio = By.xpath("(//div[@class='col-12 px-0 times-week__info-inner checkout-slot-block'])[7]");
+	SelecthoraEnvio = By.xpath("(//div[@class='col-12 px-0 times-week__info-inner checkout-slot-block'])[8]");
 	btnPagar = By.xpath("(//button[contains(text(),'Pagar')])[1]");
 	btnPagarGuest = By.xpath("//button[@class='clickPayment btn btn-primary btn-block mt-3 text-center text-uppercase submit-promotion payGuest']");
 	btnEntendidoPopup = By.xpath("//button[@class='btn btn-primary mt-3 text-center submit-entiendo']");
@@ -161,7 +161,7 @@ public class PageCheckout {
 	listMSI = By.xpath("//select[@id='clearCouwn']");
 	aUnPago = By.xpath("//option[@id='inpgro-0']");
 	metodosDePagoSecc = By.xpath("//button[@class='btn pr-0 mr-1 btn-collapsed-div-payment2 getButtomCall']");
-	seleccionarPrimeraTDC = By.xpath("(//div[@class='row col-12 p-0 m-0 cursor-pointer'])[1]");
+	seleccionarPrimeraTDC = By.xpath("(//label[@class='col-3 col-lg-2 col-sm-2 card-text-mobile card-text-with text-center align-self-center cursor-pointer'])[1]");
 	
 	}
 	
@@ -169,15 +169,20 @@ public class PageCheckout {
 	public void SeleccionamosTDCguardada (String cvv) throws IOException {		
 		File screenshot;
 		screenshot = ((TakesScreenshot)driver ).getScreenshotAs(OutputType.FILE);
-		WebDriverWait ewait = new WebDriverWait (driver,20);
+		WebDriverWait ewait = new WebDriverWait (driver,50);
+		try{
+			Thread.sleep(9500);
+			}
+			catch(InterruptedException ie){
+				
+			} 		
 		driver.findElement(seleccionarFecha).click();
-		ewait.until(ExpectedConditions.elementToBeClickable(SelecthoraEnvio));
 		driver.findElement(SelecthoraEnvio).click();
 		ewait.until(ExpectedConditions.elementToBeClickable(metodosDePagoSecc));
 		driver.findElement(metodosDePagoSecc).click();
 	driver.findElement(seleccionarPrimeraTDC).click();
 	try{
-		Thread.sleep(2000);
+		Thread.sleep(9000);
 		}
 		catch(InterruptedException ie){
 			
@@ -341,8 +346,19 @@ public class PageCheckout {
 		
 	}
 	
+
+	public void seleccionarPagoContraEntregatdc() {
+		WebDriverWait ewait = new WebDriverWait (driver,10);
+		ewait.until(ExpectedConditions.elementToBeClickable(PagoContraEntrega));	
+		driver.findElement(PagoContraEntrega).click();
+		driver.findElement(methodTDC).click();
+		
+		
+	}
+	
 	public void SuperEnTuCasa() {
 		WebDriverWait ewait = new WebDriverWait (driver,50);
+		ewait.until(ExpectedConditions.elementToBeClickable(seleccionarFecha));	
 		driver.findElement(seleccionarFecha).click();
 		try{
 			Thread.sleep(4000);

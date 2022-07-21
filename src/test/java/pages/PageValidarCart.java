@@ -55,8 +55,8 @@ public class PageValidarCart {
 		irCarrito.click();
 		}	catch(Exception ie){
 		}
-	
-		WebDriverWait ewait = new WebDriverWait (driver,80);
+
+	WebDriverWait ewait = new WebDriverWait (driver,80);
 	if( driver.findElement(txtTuCarroEstaVacio).isDisplayed()){
 		ewait.until(ExpectedConditions.elementToBeClickable(btnContinuarComprando));
 		driver.findElement(btnContinuarComprando).click();

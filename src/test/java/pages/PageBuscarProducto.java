@@ -56,7 +56,7 @@ public class PageBuscarProducto {
 
 	public void buscarProductoConDescuentoCupon (String productDesc) {		
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(9000);
 			}
 			catch(InterruptedException ie){
 			}	  
