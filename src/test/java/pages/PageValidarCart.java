@@ -21,6 +21,7 @@ public class PageValidarCart {
 	private By btnVaciarCarrito;
 	private By siAceptar;
 	private By btnContinuarComprando;
+	private By btnContinuarComprandoMinicar;
 	private By productoUno;
 	private By btnIniciarPago;
 	private By txtTuCarroEstaVacio;
@@ -39,6 +40,7 @@ public class PageValidarCart {
 		btnIniciarPago = By.xpath("(//a[@class='set-spinner btn button button--secondary-red checkout-btn js-checkout-btn dm-cart__edit-btn btn btn-primary col-12 py-1'])[1]");
 		txtTuCarroEstaVacio = By.xpath("//p[@class='cart-empty__title font-primary--medium mb-2 mb-lg-4']");
 		Usarpuntos = By.xpath("//div[@class='font-primary--bold font-size-14 mr-3']");
+		btnContinuarComprandoMinicar = By.xpath("(//span[contains(text(),'Continuar comprando')])[1]");
 	}
 	
 	public void validarCarro() {

@@ -95,6 +95,7 @@ public class PageCheckout {
     private By aUnPago;
     private By metodosDePagoSecc;
     private By seleccionarPrimeraTDC;
+    private By deslizaHorario;
     
 	public PageCheckout (WebDriver driver) {
 	this.driver = driver;
@@ -162,7 +163,7 @@ public class PageCheckout {
 	aUnPago = By.xpath("//option[@id='inpgro-0']");
 	metodosDePagoSecc = By.xpath("//button[@class='btn pr-0 mr-1 btn-collapsed-div-payment2 getButtomCall']");
 	seleccionarPrimeraTDC = By.xpath("(//label[@class='col-3 col-lg-2 col-sm-2 card-text-mobile card-text-with text-center align-self-center cursor-pointer'])[1]");
-	
+	deslizaHorario = By.xpath("//span[@class='my-auto right-icon']");
 	}
 	
 
@@ -171,7 +172,7 @@ public class PageCheckout {
 		screenshot = ((TakesScreenshot)driver ).getScreenshotAs(OutputType.FILE);
 		WebDriverWait ewait = new WebDriverWait (driver,50);
 		try{
-			Thread.sleep(9500);
+			Thread.sleep(7500);
 			}
 			catch(InterruptedException ie){
 				
